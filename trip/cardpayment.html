@@ -1,0 +1,34 @@
+<?php     //start php tag
+//include connect.php page for database connection
+include('connect.php');
+
+$cname = $_POST['cardname'];
+$cnum = $_POST['cardnumber'];
+$expmonth = $_POST['expmonth'];
+$expyear = $_POST['expyear'];
+$cvv = $_POST['cvv'];
+
+
+if (!empty($cname) || !empty($cnum) || !empty($expmonth) || !empty($expyear) || !empty($cvv)) 
+{ 
+	$INSERT = "INSERT Into card_payment (cardname, cardnumber, expmonth, expyear, cvv) values(?, ?, ?, ?, ?)";
+	
+		$stmt = $con->prepare($INSERT);
+		$stmt->bind_param("sissi", $cname, $cnum, $expmonth, $expyear, $cvv);
+		$stmt->execute();
+		echo'<script>alert("Inserted Successfully")</script>';
+		include("form.html");
+		}
+		else
+		{
+		echo'<script>alert("Failed To Insert")</script>';
+		}		
+		
+	
+		$stmt->close();
+		$con->close();
+		
+	
+
+	
+?>	
